@@ -1,19 +1,20 @@
 const controller = {};
-const { create } = require('express-handlebars');
 const models = require('../models');
 
 controller.showList = async (req, res) => {
+    // await sequelize.query('SELECT pg_notify(\'invalcache\', \'\')');
+
     allBlogs = await models.Blog.findAll({
         attributes: ['id', 'title', 'imagePath', 'summary', 'createdAt'],
         include: [
             { model: models.Category },
             { model: models.Tag },
             { model: models.Comment }
-        ]
+        ], 
     });
 
     categories = await models.Category.findAll({
-        attributes: ['id', 'name']
+        attributes: ['id', 'name'],
     });
 
     // res.locals.blogs = req.query.category ? allBlogs.filter((item) => item.Category.name == req.query.category) : allBlogs;
@@ -22,8 +23,13 @@ controller.showList = async (req, res) => {
         attributes: ['id', 'name'] 
     }));
 
+    res.locals.query = req.query.search;
+
     // res.locals.blogs = req.query.tag ? allBlogs.filter((item) => item.Tags.some(tag => tag.name == req.query.tag)) : allBlogs;
 
+    if (req.query.search) 
+        res.locals.blogs = allBlogs.filter((item) => item.title.toLowerCase().includes(req.query.search));
+    else 
     if (req.query.category) 
         res.locals.blogs = allBlogs.filter((item) => item.Category.name == req.query.category);
     else if (req.query.tag) 
