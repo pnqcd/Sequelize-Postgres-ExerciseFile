@@ -1,0 +1,39 @@
+                <div class="col-lg-4 col-md-5">
+                    <div class="blog__sidebar">
+                        <div class="blog__sidebar__search">
+                            <form action="#">
+                                <input type="text" placeholder="Search...">
+                                <button type="submit"><span class="icon_search"></span></button>
+                            </form>
+                        </div>
+                        <div class="blog__sidebar__item">
+                            <h4>Categories</h4>
+                            <ul>
+                                <li><a href="/">All</a></li>
+                                {{!-- <li><a href="/?category=1">Beauty (20)</a></li>
+                                <li><a href="/?category=2">Food (5)</a></li>
+                                <li><a href="/?category=3">Life Style (9)</a></li>
+                                <li><a href="/?category=4">Travel (10)</a></li> --}}
+                                {{#each data.categories}}
+                                    <li><a href="/blogs?category={{name}}">{{name}}</a></li>
+                                {{/each}}
+                            </ul>
+                        </div>
+
+                        <div class="blog__sidebar__item">
+                            <h4>Search By Tags</h4>
+                            <div class="blog__sidebar__item__tags">
+                                {{!-- <a href="#">Apple</a>
+                                <a href="#">Beauty</a>
+                                <a href="#">Vegetables</a>
+                                <a href="#">Fruit</a>
+                                <a href="#">Healthy Food</a>
+                                <a href="#">Lifestyle</a> --}}
+
+                                {{#each data.tags}}
+                                    <a href="/blogs?tag={{name}}">{{name}}</a>
+                                {{/each}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
